@@ -1,0 +1,2 @@
+<?php
+// TWOJA STARA PACZY!

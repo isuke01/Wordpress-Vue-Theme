@@ -1,0 +1,258 @@
+
+html.js-enabled{
+	.gallery{
+		&.gallery-type-carousel{
+			overflow: visible;
+		}
+	}
+}
+
+.gallery {
+	margin-bottom: 1.5em;
+	&.gallery-type-carousel{
+		//max-height: 350px;
+		overflow: hidden;
+		position: relative;
+		@include mquery(767px){
+			//width: calc(100% + 30px);
+			.owl-stage-outer{
+				//width: calc(100% +30px);
+			}
+		}
+		.owl-stage-outer{
+		}
+		.owl-nav{
+			.owl-prev, .owl-next{
+				@include font-size( 6 );
+				line-height: 0.78;
+				position: absolute;
+				top: 50%;
+				width: 50px;
+				height: 60px;
+				transform: translate(0, -50%);
+				text-align: center;
+				color: #444444;
+				font-family: "Crimson Text", serif;
+				transition: all 0.2s ease-in-out;
+				@include mquery(767px){
+					height: 48px;
+					width: 40px;
+					line-height: 0.58;
+				}
+				&.disabled{
+					opacity: 0.6;
+				}
+				&:hover, &:focus{
+					background: #444;
+					color: #fff;
+				}
+				@include mquery(1250px){
+					background: rgba(#fff, 0.8);
+				}
+			}
+			.owl-prev{
+				left: -50px;
+				@include mquery(767px){
+					left: 0
+				}
+			}
+			.owl-next{
+				right: -50px;
+				@include mquery(767px){
+					right: 0
+				}
+			}
+		}
+		/*.gallery-item{
+			margin: 0;
+			.gallery-icon{
+				img{
+					min-height: 200px;
+					//height: 320px;
+				}
+			}
+		}*/
+	}
+	//&.gallery-type-grid{
+		.gallery-item{
+			a{
+/* 				display: block!important;
+				position: relative;
+				padding-bottom: 75%;
+				border: none !important;
+/* 				img{
+					position: absolute;
+					height: 100%;
+					left: 0;
+					top: 0;
+					width: 100%;
+				} */
+			}
+		}
+	//}
+}
+.gallery-item {
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	.gallery-icon{
+		height: inherit;
+	}
+	a{
+		height: inherit;
+		display: block;
+		overflow: hidden;
+/* 		img{
+			transition: transform 0.2s ease-in-out;
+			will-change: transform;
+		}
+		&:hover{
+			img{
+				transform: scale(1.05);
+			}
+		} */
+	}
+/* 	img{
+		object-fit: cover;
+		width: 100%;
+		height: inherit;
+	} */
+	&:hover{
+		.wp-caption-text{
+			transform: translateY(0);
+		}
+	}
+	.wp-caption-text{
+		position: absolute;
+		@include font-size(1.4);
+		width: 100%;
+		bottom: 0;
+		transform: translateY(100%);
+		transition: transform 0.2s ease-in-out;
+		background-color: rgba(255, 255, 255, 0.82)
+	}
+	.proportion-square &, .proportion-wide &, .proportion-protret &{
+		.gallery-icon{
+			height: 0;
+			position: relative;
+		}
+		img{
+			bottom: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			@include object-fit(cover);
+			//object-fit: cover;
+		}
+	}
+	.proportion-protret & {
+		.gallery-icon{
+			padding-bottom: 133%;
+		}
+	}
+	.proportion-square & {
+		.gallery-icon{
+			padding-bottom: 100%;
+		}
+	}
+	.proportion-wide & {
+		.gallery-icon{
+			padding-bottom: 56.25%;
+		}
+	}
+
+	/*   COlumns design   */
+	.gallery-columns-2 & {
+		max-width: 50%;
+		@include mquery(767px){
+			max-width: 50%;
+		}
+		@include mquery(479px){
+			max-width: 100%
+		}
+	}
+
+	.gallery-columns-3 & {
+		max-width: 33.33%;
+		@include mquery(767px){
+			max-width: 50%;
+		}
+		@include mquery(479px){
+			max-width: 100%
+		}
+	}
+
+	.gallery-columns-4 & {
+		max-width: 25%;
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+
+	.gallery-columns-5 & {
+		max-width: 20%;
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+
+	.gallery-columns-6 & {
+		max-width: 16.66%;
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+
+	.gallery-columns-7 & {
+		max-width: 14.28%;
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+
+	.gallery-columns-8 & {
+		max-width: 12.5%;
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+
+	.gallery-columns-9 & {
+		max-width: 11.11%;
+		@include mquery(991px){
+			max-width: 20%;
+		}
+		@include mquery(767px){
+			max-width: 25%;
+		}
+		@include mquery(479px){
+			max-width: 50%
+		}
+	}
+}
+
+.gallery-caption {
+	display: block;
+}
