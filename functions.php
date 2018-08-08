@@ -399,3 +399,16 @@ if ( ! function_exists( 'vt_responsive_video_oembed_html' ) ) :
     }
     add_filter( 'embed_oembed_html', 'vt_responsive_video_oembed_html', 10, 4 );
 endif;
+
+function post_types_arr(){
+    $pt_args = [
+        'public'   => true,
+        'show_ui' =>  true,
+    ];
+    $post_types = get_post_types($pt_args, 'names'); 
+    $pt = [];
+    foreach ($post_types as $key => $postType) {
+        $pt[] = $key;
+    }
+    return $pt;
+}

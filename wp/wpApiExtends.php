@@ -19,36 +19,76 @@ function vt_rest_get_wp_params( WP_REST_Request $request  ){
 }
 
 
-/**
- * Extend Callback to return Information about featured image, not only ID
- */
-function vt_extend_rest_post_response() {
+function vt_extend_request_add_featured_image() {
 	// Add featured image
-	register_rest_field( ['post', 'page'], //use cases
+	$postTypes = post_types_arr();
+	register_rest_field( $postTypes, // array of post types where this should be done
 		'featured_image_src', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
 		[
-			'get_callback'    => 'get_image_src',
+			'get_callback'    => 'vt_get_image_src_for_rest',
 			'update_callback' => null,
 			'schema'          => null,
 		]
 	);
 
-}
-add_action( 'rest_api_init', 'vt_extend_rest_post_response' );
+	register_rest_field( $postTypes,
+		'acf', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
+		[
+			'get_callback'    => 'vt_get_acf_fields',
+			'update_callback' => null,
+			'schema'          => null,
+		]
+	);
 
-function get_image_src( $object, $field_name, $request ) {
+	register_rest_field( $postTypes,
+		'protection', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
+		[
+			'get_callback'    => 'vt_check_post_protection',
+			'update_callback' => null,
+			'schema'          => null,
+		]
+	);
+}
+add_action( 'rest_api_init', 'vt_extend_request_add_featured_image' );
+
+function vt_get_image_src_for_rest( $object, $field_name, $request ) {
 
 	if($object['featured_media']){
 		$feat_img_array = wp_prepare_attachment_for_js($object['featured_media']);
 	}else{
 		$feat_img_array = false;
 	}
-
 	return $feat_img_array;
-
 }
 
-/*
+
+function vt_get_acf_fields( $object, $field_name, $request ) {
+	$acf = false;
+	if( $object['id'] && $object['password'] === '' || ($object['password'] === $request['password']) ){
+		$acf = get_fields($object['id']);
+	}
+	return $acf;
+}
+
+/**
+ * Password protection extend for rest api
+ */
+function vt_check_post_protection( $object, $field_name, $request ) {
+	$protection = [
+		'password' => false,
+		'locked' => false,
+	];
+	if( $object['password'] !== '' ){
+		$protection['password'] = true; 
+		$protection['locked'] = true; 
+	}
+	if($object['password'] === $request['password']){
+		$protection['locked'] = false; 
+	}
+
+	return $protection;
+}
+
 function vt_get_cat_name( $object, $field_name, $request ) {
 	$cats = $object['categories'];
 	$res = [];
@@ -67,7 +107,7 @@ function vt_get_cat_name( $object, $field_name, $request ) {
 	}
 	return $res;
 }
-*/
+
 
 
 /**
@@ -102,3 +142,14 @@ function wp_api_encode_yoast($data, $post, $context) {
     $data = (array) $yoastMeta;
     return $data;
 }
+
+/**
+ * fix for localhost debug
+ */
+add_action( 'rest_api_init', function () {
+    //Path to REST route and the callback function
+    register_rest_route( 'wpvue/v2', '/dailymenu/', array(
+        'methods' => 'GET',
+        'callback' => 'vt_daily_menus',
+    ));
+});

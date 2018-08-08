@@ -3,6 +3,10 @@
 		<adminBar v-if="user.loggedIn && user.caps ==='administrator' && user.admin" />
 		<themeHeader />
 		<router-view/>
+		<label>PAGE ID:</label>
+		<input type="number" v-model="pageID">
+		<button @click="loadPageBTN">LOAD</button>
+		<br/>DEBUG:<pre v-html="debug"></pre>
 	</div>
 </template>
 
@@ -23,6 +27,8 @@ export default {
 	},
 	data(){
 		return {
+			pageID: 5,
+			debug: null,
 			user: WPVUE.user
 		}
 	},
@@ -35,8 +41,16 @@ export default {
 	methods:{
 		...mapActions([
 			'getFrontPage',
-			'getPageByRoute'
-		])
+			'getPageByRoute',
+			'loadPage'
+		]),
+		loadPageBTN(){
+			const VM = this;
+			console.warn('START LOADING PAGE: ', VM.pageID)
+			VM.loadPage(VM.pageID).then( res => {
+				VM.debug = res;
+			});
+		}
 	},
 	watch:{
 		'$route'(to, from){

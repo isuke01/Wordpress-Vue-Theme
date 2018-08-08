@@ -19,10 +19,10 @@ export default new Router({
       	component: frontPage
 	},
 	
-	{
+/* 	{
 		path: '/404', name: 'notFound', component: page404,
 		meta: { post_type: null, type: '404', title: 'Page not found' }
-	},
+	}, */
 	{
 		path: '/' + WPVUE.post_page_slug, name: 'archivePost', component: archivePost,
 		meta: { post_type: 'post', type: 'archive', title: 'Aktuelt' },

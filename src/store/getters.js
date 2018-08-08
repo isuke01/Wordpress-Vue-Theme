@@ -16,6 +16,7 @@ export default {
     },
     currentPageID: (state, getters) => { 
         if(getters.currentPage) return getters.currentPage.id
-        if(state.route.name === 'frontPage') return Number(WPVUE.front_page)
+        if (state.route.name === 'frontPage') return Number(WPVUE.front_page)
+        else return null
     },
 }

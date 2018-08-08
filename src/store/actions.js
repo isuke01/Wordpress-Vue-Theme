@@ -20,6 +20,37 @@ export default {
 		});
 	},
 
+	async loadPage({ commit, getters }, pageID) {
+
+		let stored = null;		
+		const storeData = await new Promise(resolve => {
+			if (getters.allLoadedPages && getters.allLoadedPages['pages'] && getters.allLoadedPages['pages'].length) { 
+				stored = getters.allLoadedPages['pages'].find(it => (pageID === it.id ));	
+			}
+			resolve(stored);
+		});
+
+		return REST.get('wp/v2/pages/' + pageID, {
+			params: {nocache: new Date().getTime()}
+		})
+		.then((res) => {
+			if (res.data) {
+				let data = [];
+				data[0] = res.data;
+				commit('storePage', data);
+				return res.data;
+				
+			} else {
+				console.log('GO 404')
+				//window.location.pathname = '/404'				
+				return {'status' : '404'};
+				
+			}
+		} )
+		.catch( ( res ) => {
+			console.log( `Something went wrong (loadPage): ${ res }` );
+		});
+	},
 	/**
 	 * @param {Object} router  { route VUEX  }
 	 */
@@ -62,7 +93,7 @@ export default {
 				return loadedData[0];
 			} else {
 				console.log('IS 404')
-				window.location.pathname = '/404'
+				//window.location.pathname = '/404'
 				
 				return {'status' : '404'};
 				//commit('storePage', loadedData);	 404												
