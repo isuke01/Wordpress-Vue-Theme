@@ -43,12 +43,15 @@ export default {
 			pageID = Number(payload)
 		}
 		
-/* 		await new Promise(resolve => {
+		const storeData = await new Promise(resolve => {
 			if (getters.allLoadedPages && getters.allLoadedPages[postType] && getters.allLoadedPages[postType].length) { 
-				stored = getters.allLoadedPages[postType].find(it => (pageID === it.id ));	
+				stored = getters.allLoadedPages[postType].find(it => (pageUrl === it.link.replace(/\/$/, "") ));	
 			}
 			resolve(stored);
-		}); */
+		});
+				
+		/** End if find this page in store */
+		if (storeData && storeData.id) return storeData;
 
 		return REST.get('wp/v2/'+postType+'/' + pageID, {
 			params: {
