@@ -20,18 +20,41 @@ export default {
 		});
 	},
 
-	async loadPage({ commit, getters }, pageID) {
+	/**
+	 * 
+	 * @param {*} param0 
+	 * @param {mixed} payload = can be only page ID if load pages, but if other post types or attr it must be an object that contain page ID, attrs, postType 
+	 */
+	async loadPage({ commit, getters }, payload) {
+		let stored = null;
+		let pageID = 1;
+		let postType = 'pages';
+		let attrs = null;
 
-		let stored = null;		
-		const storeData = await new Promise(resolve => {
-			if (getters.allLoadedPages && getters.allLoadedPages['pages'] && getters.allLoadedPages['pages'].length) { 
-				stored = getters.allLoadedPages['pages'].find(it => (pageID === it.id ));	
+		if (typeof payload === "object") {
+			pageID = Number(payload.id)
+			postType = payload.postType
+			attrs = payload.attrs
+			
+			postType = (postType === 'page') ? 'pages' : postType;  // in rest endpoint for pages is / pages but it return post_type page :/	
+			postType = (postType === 'post') ? 'posts' : postType; // same as above but for posts
+
+		} else {
+			pageID = Number(payload)
+		}
+		
+/* 		await new Promise(resolve => {
+			if (getters.allLoadedPages && getters.allLoadedPages[postType] && getters.allLoadedPages[postType].length) { 
+				stored = getters.allLoadedPages[postType].find(it => (pageID === it.id ));	
 			}
 			resolve(stored);
-		});
+		}); */
 
-		return REST.get('wp/v2/pages/' + pageID, {
-			params: {nocache: new Date().getTime()}
+		return REST.get('wp/v2/'+postType+'/' + pageID, {
+			params: {
+				...attrs,
+				nocache: new Date().getTime()
+			}
 		})
 		.then((res) => {
 			if (res.data) {
