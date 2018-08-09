@@ -3,9 +3,6 @@
 > Vue wordperss theme
 
 This theme require extra plugins.
-### ACF PLUGIN TO REST
-*(If acf used)*
-[WP REPO](https://wordpress.org/plugins/acf-to-rest-api/)
 ### WP REST API Menus
 [WP REPO](https://wordpress.org/plugins/wp-api-menus/) or [GITHUB](https://github.com/unfulvio/wp-api-menus)
 
