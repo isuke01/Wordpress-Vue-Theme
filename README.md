@@ -15,6 +15,8 @@ Open index.html and Enter correct jQuery (I use local because of offline develop
 If you would like to to have admin bar on locallhost, you must make correct config in functions.php
 
 You can also look into dev.env.js if you wish too see other conf, but they are covered by settings in prod.env.js
+
+PHP varribles pass to JS can be fund in functions.php, vt_get_localize_script_data() as array passed to script.
 ## Build Setup
 
 ``` bash
