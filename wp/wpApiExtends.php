@@ -31,14 +31,16 @@ function vt_extend_request_add_featured_image() {
 		]
 	);
 
-	register_rest_field( $postTypes,
-		'acf', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
-		[
-			'get_callback'    => 'vt_get_acf_fields',
-			'update_callback' => null,
-			'schema'          => null,
-		]
-	);
+	if( class_exists('acf') ) { // Only if ACF plugin exist
+		register_rest_field( $postTypes,
+			'acf', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
+			[
+				'get_callback'    => 'vt_get_acf_fields',
+				'update_callback' => null,
+				'schema'          => null,
+			]
+		);
+	}
 
 	register_rest_field( $postTypes,
 		'protection', //NAME OF THE NEW FIELD TO BE ADDED - you can call this anything
@@ -64,6 +66,7 @@ function vt_get_image_src_for_rest( $object, $field_name, $request ) {
 
 function vt_get_acf_fields( $object, $field_name, $request ) {
 	$acf = false;
+	//ADD fields to request, and check if password is needed to see content.
 	if( $object['id'] && $object['password'] === '' || ($object['password'] === $request['password']) ){
 		$acf = get_fields($object['id']);
 	}

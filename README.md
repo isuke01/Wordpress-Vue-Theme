@@ -1,5 +1,4 @@
 # vutheme
-
 > Vue wordperss theme
 
 This theme require extra plugins.
@@ -7,7 +6,11 @@ This theme require extra plugins.
 [WP REPO](https://wordpress.org/plugins/wp-api-menus/) or [GITHUB](https://github.com/unfulvio/wp-api-menus)
 
 [ACF FIELD TO MENU](https://github.com/unfulvio/wp-api-menus/issues/47)
-### CONFIG
+### WordpPress setup
+After setup wordpress, you should set some page as Front page, and some page as page fro posts.
+Then theme is ready to work.
+
+### VUE CONFIG 
 Open prod.env.js and Enter correct paths
 
 Open index.html and Enter correct jQuery (I use local because of offline development)
@@ -17,6 +20,8 @@ If you would like to to have admin bar on locallhost, you must make correct conf
 You can also look into dev.env.js if you wish too see other conf, but they are covered by settings in prod.env.js
 
 PHP varribles pass to JS can be fund in functions.php, vt_get_localize_script_data() as array passed to script.
+
+
 ## Build Setup
 
 ``` bash

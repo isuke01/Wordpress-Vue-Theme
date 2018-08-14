@@ -27,12 +27,12 @@ export default {
 	 */
 	async loadPage({ commit, getters }, payload) {
 		let stored = null;
-		let pageID = 1;
+		let pageID = '';
 		let postType = 'pages';
 		let attrs = null;
 
 		if (typeof payload === "object") {
-			pageID = Number(payload.id)
+			pageID = (payload.id) ? Number(payload.id) : '';
 			postType = payload.postType
 			attrs = payload.attrs
 			
