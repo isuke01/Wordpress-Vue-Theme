@@ -7,7 +7,7 @@ This theme require extra plugins.
 
 [ACF FIELD TO MENU](https://github.com/unfulvio/wp-api-menus/issues/47)
 ### WordpPress setup
-After setup wordpress, you should set some page as Front page, and some page as page fro posts.
+After setup wordpress, you should set some page as Front page, and some page as page for posts.
 Then theme is ready to work.
 
 ### VUE CONFIG 
